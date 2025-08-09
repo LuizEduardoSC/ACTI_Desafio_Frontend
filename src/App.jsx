@@ -110,7 +110,14 @@ function App() {
           dynamicMask
           onAutoFill={(auto) => {
             if (auto.razaoSocial) setValue('razaoSocial', auto.razaoSocial);
-            if (auto.nomeFantasia) setValue('nomeFantasia', auto.nomeFantasia);
+
+            // Se não tiver nome fantasia, usa a razão social como fallback
+            const fantasiaFinal =
+              auto.nomeFantasia && auto.nomeFantasia.trim() !== ''
+                ? auto.nomeFantasia
+                : auto.razaoSocial || 'Sem nome fantasia';
+
+            setValue('nomeFantasia', fantasiaFinal);
           }}
         />
 

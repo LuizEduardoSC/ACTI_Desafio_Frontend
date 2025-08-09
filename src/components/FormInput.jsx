@@ -45,7 +45,13 @@ const FormInput = forwardRef(
                             // monta objeto de autofill com os campos que você quer popular
                             const auto = {};
                             if (obj.nome) auto.razaoSocial = obj.nome;
-                            if (obj.fantasia) auto.nomeFantasia = obj.fantasia;
+                            auto.razaoSocial = obj.nome || ''; // sempre preenche
+
+                            // se não tiver nome fantasia, usa a razão social como fallback
+                            auto.nomeFantasia = obj.fantasia && obj.fantasia.trim() !== ''
+                                ? obj.fantasia
+                                : obj.nome || 'Sem nome fantasia';
+
                             /* if (obj.cep) auto.cep = obj.cep;
                             if (obj.logradouro) auto.logradouro = obj.logradouro;
                             if (obj.bairro) auto.bairro = obj.bairro;
